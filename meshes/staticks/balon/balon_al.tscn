@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://ry04q6h4hfsn"]
+
+[ext_resource type="PackedScene" uid="uid://d2lcoi570ln0k" path="res://meshes/staticks/balon/balon_al.blend" id="1_585l6"]
+
+[node name="balon_al" instance=ExtResource("1_585l6")]

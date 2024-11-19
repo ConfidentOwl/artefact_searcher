@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://qs42hje2gnoq"]
+
+[ext_resource type="Script" path="res://ui/scenes/item_actions.gd" id="1_cralf"]
+
+[node name="ItemActions" type="VBoxContainer"]
+offset_right = 86.0
+offset_bottom = 171.0
+pivot_offset = Vector2(86, 171)
+script = ExtResource("1_cralf")
+
+[node name="DropItem" type="Button" parent="."]
+layout_mode = 2
+text = "Drop"
+
+[node name="DropItemAll" type="Button" parent="."]
+layout_mode = 2
+text = "Drop all
+"
+
+[node name="UseItem" type="Button" parent="."]
+layout_mode = 2
+text = "Use
+"
+
+[node name="PutInSlot" type="Button" parent="."]
+layout_mode = 2
+text = "Put in slot"
+
+[node name="Discharge" type="Button" parent="."]
+layout_mode = 2
+text = "Discharge"
+
+[node name="Put on Weapon 1" type="Button" parent="."]
+layout_mode = 2
+text = "Put on Weapon 1
+"
+
+[node name="Put on Weapon 2" type="Button" parent="."]
+layout_mode = 2
+text = "Put on Weapon 2
+"
+
+[node name="Put on Weapon 3" type="Button" parent="."]
+layout_mode = 2
+text = "Put on Weapon 3
+"
+
+[node name="Remove Silenc" type="Button" parent="."]
+layout_mode = 2
+text = "Remove Silenc
+"
+
+[node name="Remove Scope" type="Button" parent="."]
+layout_mode = 2
+text = "Remove Scope
+"
+
+[node name="Remove GP" type="Button" parent="."]
+layout_mode = 2
+text = "Remove GP
+"
+
+[connection signal="button_down" from="DropItem" to="." method="_on_drop_item_button_down"]
+[connection signal="button_down" from="DropItemAll" to="." method="_on_drop_item_all_button_down"]
+[connection signal="button_down" from="UseItem" to="." method="_on_use_item_button_down"]
+[connection signal="button_down" from="PutInSlot" to="." method="_on_put_in_slot_button_down"]
+[connection signal="button_down" from="Put on Weapon 1" to="." method="_on_put_on_weapon_1_button_down"]

@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://capvll4wgto04"]
+
+[ext_resource type="PackedScene" uid="uid://05urj7j8ib3t" path="res://meshes/items/af_all.blend" id="1_cy8h6"]
+
+[node name="af_all" instance=ExtResource("1_cy8h6")]

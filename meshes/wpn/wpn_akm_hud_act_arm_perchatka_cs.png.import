@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://ko4w87p6cjt7"
+path.s3tc="res://.godot/imported/wpn_akm_hud_act_arm_perchatka_cs.png-c869df48bf37e4c069a0d425af478093.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "957fb1a902b9a9aa85c80007bb7986d5"
+}
+
+[deps]
+
+source_file="res://meshes/wpn/wpn_akm_hud_act_arm_perchatka_cs.png"
+dest_files=["res://.godot/imported/wpn_akm_hud_act_arm_perchatka_cs.png-c869df48bf37e4c069a0d425af478093.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

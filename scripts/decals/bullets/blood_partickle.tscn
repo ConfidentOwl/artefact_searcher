@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bopv8i3w2y80j"]
+
+[ext_resource type="Texture2D" path="res://textures/wm/wm_blood_4.dds" id="1_a5g2y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lqydx"]
+transparency = 1
+albedo_texture = ExtResource("1_a5g2y")
+disable_receive_shadows = true
+billboard_mode = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fdtcl"]
+inherit_velocity_ratio = 1.0
+spread = 180.0
+initial_velocity_max = 2.0
+attractor_interaction_enabled = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_nqko3"]
+size = Vector2(0.1, 0.1)
+
+[node name="Blood_Partickle" type="GPUParticles3D"]
+material_override = SubResource("StandardMaterial3D_lqydx")
+amount = 1024
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fdtcl")
+draw_pass_1 = SubResource("QuadMesh_nqko3")

@@ -1,0 +1,148 @@
+[gd_scene load_steps=3 format=3 uid="uid://didovs5suum1m"]
+
+[ext_resource type="Script" path="res://scripts/item_inventoy_list.gd" id="1_lgpn6"]
+[ext_resource type="PackedScene" uid="uid://qs42hje2gnoq" path="res://scripts/item_actions.tscn" id="2_f2y8g"]
+
+[node name="ItemInventoyList" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lgpn6")
+
+[node name="ItemList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 112.0
+offset_right = 535.0
+offset_bottom = 1012.0
+
+[node name="ItemActions" parent="." node_paths=PackedStringArray("inventory_gui") instance=ExtResource("2_f2y8g")]
+visible = false
+layout_mode = 0
+inventory_gui = NodePath("..")
+
+[node name="ItemSlots" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_top = 47.0
+offset_right = 20.0
+offset_bottom = 1020.0
+grow_horizontal = 2
+
+[node name="PlayerItemSlotUI1" type="TextureButton" parent="ItemSlots"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_mask = 4
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="PlayerItemSlotUI1Text" type="Label" parent="ItemSlots/PlayerItemSlotUI1"]
+custom_minimum_size = Vector2(20, 10)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="PlayerItemSlotUI2" type="TextureButton" parent="ItemSlots"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_mask = 4
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="PlayerItemSlotUI2Text" type="Label" parent="ItemSlots/PlayerItemSlotUI2"]
+custom_minimum_size = Vector2(20, 10)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="PlayerItemSlotUI3" type="TextureButton" parent="ItemSlots"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_mask = 4
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="PlayerItemSlotUI3Text" type="Label" parent="ItemSlots/PlayerItemSlotUI3"]
+custom_minimum_size = Vector2(20, 10)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 366.0
+offset_bottom = 106.0
+
+[node name="ShouAll" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "All
+"
+
+[node name="ShouWpn" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Wpn
+"
+
+[node name="ShouCons" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Cons
+"
+
+[node name="ShouAmmo" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Ammo
+"
+
+[node name="ShouMonsterPart" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Monster
+Part"
+
+[connection signal="item_activated" from="ItemList" to="." method="_on_item_list_item_activated"]
+[connection signal="mouse_entered" from="ItemSlots/PlayerItemSlotUI1" to="." method="_on_player_item_slot_ui_1_mouse_entered"]
+[connection signal="mouse_exited" from="ItemSlots/PlayerItemSlotUI1" to="." method="_on_player_item_slot_ui_1_mouse_exited"]
+[connection signal="mouse_entered" from="ItemSlots/PlayerItemSlotUI2" to="." method="_on_player_item_slot_ui_2_mouse_entered"]
+[connection signal="mouse_exited" from="ItemSlots/PlayerItemSlotUI2" to="." method="_on_player_item_slot_ui_2_mouse_exited"]
+[connection signal="mouse_entered" from="ItemSlots/PlayerItemSlotUI3" to="." method="_on_player_item_slot_ui_3_mouse_entered"]
+[connection signal="mouse_exited" from="ItemSlots/PlayerItemSlotUI3" to="." method="_on_player_item_slot_ui_3_mouse_exited"]
+[connection signal="button_down" from="HBoxContainer/ShouAll" to="." method="_on_shou_all_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouWpn" to="." method="_on_shou_wpn_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouCons" to="." method="_on_shou_cons_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouAmmo" to="." method="_on_shou_ammo_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouMonsterPart" to="." method="_on_shou_monster_part_button_down"]

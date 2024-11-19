@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqlc0fp355n2u"]
+
+[ext_resource type="Script" path="res://scripts/inventory_keeper.gd" id="1_pgtko"]
+
+[node name="Inventory_Keeper" type="Node"]
+script = ExtResource("1_pgtko")

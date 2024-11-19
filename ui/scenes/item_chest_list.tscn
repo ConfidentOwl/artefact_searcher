@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs8c0v1mo1wti"]
+
+[ext_resource type="Script" path="res://ui/scenes/item_chest_list.gd" id="1_8e4oi"]
+[ext_resource type="PackedScene" uid="uid://qs42hje2gnoq" path="res://scripts/item_actions.tscn" id="1_rb1jp"]
+
+[node name="Item_Chest_List" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8e4oi")
+
+[node name="ItemList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 112.0
+offset_right = 535.0
+offset_bottom = 1012.0
+
+[node name="ItemList2" type="ItemList" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -570.0
+offset_top = 112.0
+offset_right = -70.0
+offset_bottom = 1012.0
+grow_horizontal = 0
+
+[node name="ItemActions" parent="." node_paths=PackedStringArray("inventory_gui") instance=ExtResource("1_rb1jp")]
+visible = false
+layout_mode = 0
+inventory_gui = NodePath("..")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -183.0
+offset_right = 183.0
+offset_bottom = 106.0
+grow_horizontal = 2
+
+[node name="ShouAll" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "All
+"
+
+[node name="ShouWpn" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Wpn
+"
+
+[node name="ShouCons" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Cons
+"
+
+[node name="ShouAmmo" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Ammo
+"
+
+[node name="ShouMonsterPart" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Monster
+Part
+"
+
+[connection signal="item_selected" from="ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="item_selected" from="ItemList2" to="." method="_on_item_list_2_item_selected"]
+[connection signal="button_down" from="HBoxContainer/ShouAll" to="." method="_on_shou_all_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouWpn" to="." method="_on_shou_wpn_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouCons" to="." method="_on_shou_cons_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouAmmo" to="." method="_on_shou_ammo_button_down"]
+[connection signal="button_down" from="HBoxContainer/ShouMonsterPart" to="." method="_on_shou_monster_part_button_down"]

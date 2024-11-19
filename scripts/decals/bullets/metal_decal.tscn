@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2gvju663cc0w"]
+
+[ext_resource type="Texture2D" path="res://textures/wm/wm_bullet_metall_thik.dds" id="1_8lqaq"]
+[ext_resource type="Script" path="res://scripts/decals/bullets/decal.gd" id="2_obptb"]
+
+[node name="Metal_Decal" type="Decal"]
+texture_albedo = ExtResource("1_8lqaq")
+script = ExtResource("2_obptb")

@@ -1,0 +1,401 @@
+[gd_scene load_steps=24 format=3 uid="uid://b7kdw062mpen5"]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_xihoj"]
+[ext_resource type="Script" path="res://scripts/player/reticle.gd" id="2_h7kyq"]
+[ext_resource type="Script" path="res://scripts/player/recoil.gd" id="2_tm1mp"]
+[ext_resource type="Theme" uid="uid://c1w5o35ixtc1x" path="res://ui/thems/debug.tres" id="3_0ecvs"]
+[ext_resource type="Script" path="res://scripts/debug_scrin.gd" id="4_6tdm8"]
+[ext_resource type="PackedScene" uid="uid://didovs5suum1m" path="res://ui/scenes/item_inventoy_list.tscn" id="7_4ouvh"]
+[ext_resource type="Texture2D" path="res://ui/ui_textures/ui_blood_icon_0.dds" id="7_83adt"]
+[ext_resource type="Texture2D" path="res://ui/ui_textures/ui_rad_icon_0.dds" id="7_d2jsg"]
+[ext_resource type="PackedScene" uid="uid://cs8c0v1mo1wti" path="res://ui/scenes/item_chest_list.tscn" id="7_sa2bj"]
+[ext_resource type="Script" path="res://scripts/inventory_keeper.gd" id="8_2xiyg"]
+[ext_resource type="Script" path="res://scripts/player/effects_update.gd" id="9_iyjd8"]
+[ext_resource type="Script" path="res://scripts/player/player_slots.gd" id="9_sdwui"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nstx4"]
+radius = 0.25
+
+[sub_resource type="Animation" id="Animation_kmpvk"]
+resource_name = "Crounch"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.25]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraController:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.75, 0), Vector3(0, 0.5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iak4a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraController:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.75, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CameraController/Recoil/Camera3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_felwr"]
+_data = {
+"Crounch": SubResource("Animation_kmpvk"),
+"RESET": SubResource("Animation_iak4a")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h44vs"]
+radius = 0.25
+
+[sub_resource type="GDScript" id="GDScript_x38bd"]
+script/source = "extends Control
+
+class_name ItemSlotInventtoy
+
+@onready var player: Player = $\"..\"
+@onready var effects_update: EffectsUpdate = $\"../EffectsUpdate\"
+
+@onready var ui_blood_icon: TextureRect = $PlayGUI/VBoxContainer/UI_Blood_Icon
+@onready var ui_rad_icon: TextureRect = $PlayGUI/VBoxContainer/UI_Rad_Icon
+
+func _physics_process(delta: float) -> void:
+	if effects_update.blooding_damage > 0:
+		ui_blood_icon.show()
+	else :
+		ui_blood_icon.hide()
+	if effects_update.radion_damage > 0:
+		ui_rad_icon.show()
+	else :
+		ui_rad_icon.hide()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8e3y0"]
+bg_color = Color(0.393086, 0.393086, 0.393085, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.266667, 0.270588, 0.262745, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_80x0w"]
+bg_color = Color(0.850182, 0, 0.0283156, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_bottom = 5
+border_color = Color(0.167974, 0.170491, 0.16388, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cm8h"]
+bg_color = Color(0.263643, 0.422585, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_bottom = 5
+border_color = Color(0.266667, 0.270588, 0.262745, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6sk7r"]
+font_size = 32
+font_color = Color(0.215902, 0.215902, 0.215902, 1)
+outline_size = 2
+outline_color = Color(0.299547, 0.299547, 0.299547, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pw2f8"]
+font_size = 72
+font_color = Color(0.975665, 1.34766e-06, 3.85046e-07, 1)
+shadow_size = 5
+shadow_color = Color(0.137255, 0.137255, 0.137255, 0.92549)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMER_CONTROLLER", "ANIMATIONPLAYER", "CROUNCH_SHAPECAST", "PLAYER_CAMERA", "INTERACTION", "INVENTOYRUI", "CURENTCHESTUI", "INVENTORYKEEPER", "PLAYERSLOTS", "RECOIL", "BUULETPOS", "OPTICKSCOPETEXTURE", "HANDCONTROLLER", "RETICLE", "PLAYERHP", "PLAYERENDURANCE", "CURENTAMMO", "CURENTFIRERATE", "GAMEENDLABEL", "AMMOCONTAINERGUI", "ITEMDROPER", "KNIFECAST", "EFFECTUPDATE") groups=["stalker"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_xihoj")
+CAMER_CONTROLLER = NodePath("CameraController")
+ANIMATIONPLAYER = NodePath("AnimationPlayer")
+CROUNCH_SHAPECAST = NodePath("ShapeCast3D")
+PLAYER_CAMERA = NodePath("CameraController/Recoil/Camera3D")
+INTERACTION = NodePath("CameraController/Recoil/Camera3D/RayCast3D")
+INVENTOYRUI = NodePath("Control/ItemInventoyList")
+CURENTCHESTUI = NodePath("Control/Item_Chest_List")
+INVENTORYKEEPER = NodePath("Inventroy_Keeper")
+PLAYERSLOTS = NodePath("PlayerSlots")
+RECOIL = NodePath("CameraController/Recoil")
+BUULETPOS = NodePath("CameraController/Recoil/Camera3D/BulletPos")
+OPTICKSCOPETEXTURE = NodePath("Control/OptickScope")
+HANDCONTROLLER = NodePath("CameraController/Recoil/HandController")
+RETICLE = NodePath("Control/Reticle")
+PLAYERHP = NodePath("Control/PlayGUI/VBoxContainer/PlayerHP")
+PLAYERENDURANCE = NodePath("Control/PlayGUI/VBoxContainer/PlayerEndurance")
+CURENTAMMO = NodePath("Control/PlayGUI/VBoxContainer/AmmoContainer/CurrentAmmo")
+CURENTFIRERATE = NodePath("Control/PlayGUI/VBoxContainer/AmmoContainer/FireRateTypes")
+GAMEENDLABEL = NodePath("Control/DeadLabel")
+AMMOCONTAINERGUI = NodePath("Control/PlayGUI/VBoxContainer/AmmoContainer")
+ITEMDROPER = NodePath("CameraController/Recoil/Camera3D/ItemDroper")
+KNIFECAST = NodePath("CameraController/Recoil/Camera3D/KnifeCast")
+EFFECTUPDATE = NodePath("EffectsUpdate")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_nstx4")
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="Recoil" type="Node3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+script = ExtResource("2_tm1mp")
+recoil_amount = Vector3(0.1, 0.05, 0)
+snap_amount = 8.0
+speed = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraController/Recoil"]
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Recoil/Camera3D"]
+update_mode = 1
+size = Vector3(40, 40, 40)
+enable_shadows = true
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraController/Recoil/Camera3D"]
+target_position = Vector3(0, 0, -2)
+collision_mask = 5
+
+[node name="ItemDroper" type="Node3D" parent="CameraController/Recoil/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.805208)
+
+[node name="BulletPos" type="Node3D" parent="CameraController/Recoil/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.485602)
+
+[node name="KnifeCast" type="RayCast3D" parent="CameraController/Recoil/Camera3D"]
+target_position = Vector3(0, 0, -2)
+collision_mask = 3
+
+[node name="HandController" type="Node3D" parent="CameraController/Recoil"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_felwr")
+}
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+shape = SubResource("SphereShape3D_h44vs")
+target_position = Vector3(0, 1, 0)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = SubResource("GDScript_x38bd")
+
+[node name="Reticle" type="CenterContainer" parent="Control" node_paths=PackedStringArray("RETICLE_LINES", "PlAYER_CONTROLLER")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_h7kyq")
+RETICLE_LINES = [NodePath("Top"), NodePath("Right"), NodePath("Bottom"), NodePath("Left")]
+PlAYER_CONTROLLER = NodePath("../..")
+
+[node name="Top" type="Line2D" parent="Control/Reticle"]
+points = PackedVector2Array(0, -5, 0, -15)
+width = 2.0
+
+[node name="Right" type="Line2D" parent="Control/Reticle"]
+points = PackedVector2Array(5, 0, 15, 0)
+width = 2.0
+
+[node name="Bottom" type="Line2D" parent="Control/Reticle"]
+points = PackedVector2Array(0, 5, 0, 15)
+width = 2.0
+
+[node name="Left" type="Line2D" parent="Control/Reticle"]
+points = PackedVector2Array(-5, 0, -15, 0)
+width = 2.0
+
+[node name="DebugPanel" type="Panel" parent="Control"]
+visible = false
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 50.0
+theme = ExtResource("3_0ecvs")
+script = ExtResource("4_6tdm8")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/DebugPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/DebugPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="ItemInventoyList" parent="Control" node_paths=PackedStringArray("invetory_keeper", "player_slots", "effectupdate") instance=ExtResource("7_4ouvh")]
+visible = false
+layout_mode = 1
+offset_left = 159.0
+offset_top = 104.0
+offset_right = 159.0
+offset_bottom = 104.0
+invetory_keeper = NodePath("../../Inventroy_Keeper")
+player_slots = NodePath("../../PlayerSlots")
+effectupdate = NodePath("../../EffectsUpdate")
+
+[node name="Item_Chest_List" parent="Control" node_paths=PackedStringArray("invetory_keeper") instance=ExtResource("7_sa2bj")]
+visible = false
+layout_mode = 1
+invetory_keeper = NodePath("../../Inventroy_Keeper")
+
+[node name="OptickScope" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayGUI" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PlayGUI"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="UI_Rad_Icon" type="TextureRect" parent="Control/PlayGUI/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("7_d2jsg")
+expand_mode = 1
+
+[node name="UI_Blood_Icon" type="TextureRect" parent="Control/PlayGUI/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("7_83adt")
+expand_mode = 1
+
+[node name="PlayerHP" type="ProgressBar" parent="Control/PlayGUI/VBoxContainer"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_8e3y0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_80x0w")
+value = 50.0
+show_percentage = false
+
+[node name="PlayerEndurance" type="ProgressBar" parent="Control/PlayGUI/VBoxContainer"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_8e3y0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2cm8h")
+value = 50.0
+show_percentage = false
+
+[node name="AmmoContainer" type="HBoxContainer" parent="Control/PlayGUI/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="CurrentAmmo" type="Label" parent="Control/PlayGUI/VBoxContainer/AmmoContainer"]
+layout_mode = 2
+text = "30/600"
+label_settings = SubResource("LabelSettings_6sk7r")
+
+[node name="FireRateTypes" type="Label" parent="Control/PlayGUI/VBoxContainer/AmmoContainer"]
+layout_mode = 2
+text = "Firerate
+"
+label_settings = SubResource("LabelSettings_6sk7r")
+
+[node name="DeadLabel" type="Label" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Конец игры"
+label_settings = SubResource("LabelSettings_pw2f8")
+
+[node name="Inventroy_Keeper" type="Node" parent="." node_paths=PackedStringArray("ItemInventoryList")]
+script = ExtResource("8_2xiyg")
+ItemInventoryList = NodePath("../Control/ItemInventoyList")
+
+[node name="PlayerSlots" type="Node" parent="."]
+script = ExtResource("9_sdwui")
+
+[node name="EffectsUpdate" type="Node" parent="."]
+script = ExtResource("9_iyjd8")
